@@ -1,0 +1,44 @@
+[
+    {
+        "model": "lifeadminapi.task",
+        "pk": 1,
+        "fields": {
+            "title": "LOTR",
+            "description": "",
+            "is_completed": "False",
+            "created_on": "2021-09-10",
+            "due_date": "2021-10-10",
+            "category_id": 1,
+            "assigned_to": 1,
+            "created_by": 1
+        }
+    },
+    {
+        "model": "lifeadminapi.task",
+        "pk": 2,
+        "fields": {
+            "title": "Organize Closet",
+            "description": "send things to goodwill, put up winter clothes",
+            "is_completed": "False",
+            "created_on": "2021-09-12",
+            "due_date": "2021-09-20",
+            "category_id": 2,
+            "assigned_to": 1,
+            "created_by": 1
+        }
+    },
+    {
+        "model": "lifeadminapi.task",
+        "pk": 3,
+        "fields": {
+            "title": "Speed",
+            "description": "keanu reeves action movie",
+            "is_completed": "False",
+            "created_on": "2021-09-13",
+            "due_date": "2021-11-10",
+            "category_id": 1,
+            "assigned_to": 2,
+            "created_by": 1
+        }
+    }
+]
