@@ -1,0 +1,10 @@
+[
+    {
+        "model": "lifeadminapi.household",
+        "pk": 1,
+        "fields": {
+            "name": "The Dream Team",
+            "description": "what more could you ask for?"
+        }
+    }
+]
