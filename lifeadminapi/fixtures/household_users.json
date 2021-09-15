@@ -1,0 +1,18 @@
+[
+    {
+    "model": "lifeadminapi.householduser",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "household_id": 1
+        }
+    },
+    {
+        "model": "lifeadminapi.householduser",
+        "pk": 2,
+        "fields": {
+            "user": 2,
+            "household_id": 1
+            }
+    }
+]

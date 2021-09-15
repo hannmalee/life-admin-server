@@ -1,0 +1,29 @@
+[
+    {
+        "model": "lifeadminapi.category",
+        "pk": 1,
+        "fields": {
+            "title": "Movies to Watch",
+            "description": "movies I should have seen a long time ago.",
+            "creator_id": 1
+        }
+    },
+    {
+        "model": "lifeadminapi.category",
+        "pk": 2,
+        "fields": {
+            "title": "Weekly Clean",
+            "description": "weekly tasks for cleaning",
+            "creator_id": 1
+        }
+    },
+    {
+        "model": "lifeadminapi.category",
+        "pk": 3,
+        "fields": {
+            "title": "Grocery List",
+            "description": "pantry re-stock",
+            "creator_id": 1
+        }
+    }
+]
