@@ -9,5 +9,5 @@ class Task(models.Model):
     created_on = models.DateField(default="0000-00-00")
     due_date = models.DateField(default="0000-00-00")
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
-    assigned_to = models.ForeignKey(HouseholdUser, on_delete=models.DO_NOTHING, related_name="assignedto")
-    created_by = models.ForeignKey(HouseholdUser, on_delete=models.DO_NOTHING, related_name="createdby")
+    assigned_to = models.ForeignKey(HouseholdUser, on_delete=models.DO_NOTHING, related_name="assigned_to")
+    created_by = models.ForeignKey(HouseholdUser, on_delete=models.DO_NOTHING, related_name="created_by")

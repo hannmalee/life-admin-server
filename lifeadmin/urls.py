@@ -13,9 +13,29 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from lifeadminapi.views.task import TaskView
+from lifeadminapi.views.household import HouseholdView
+from lifeadminapi.views.household_user import HouseholdUserView
 from django.contrib import admin
 from django.urls import path
+from lifeadminapi.views import CategoryView, login_user, register_user
+from rest_framework import routers
+from django.conf.urls import include
+
+
+router = routers.DefaultRouter(trailing_slash=False)
+
+router.register(r'categories', CategoryView, 'category')
+router.register(r'household_users', HouseholdUserView, 'household_user')
+router.register(r'households', HouseholdView, 'household')
+router.register(r'tasks', TaskView, 'task')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include(router.urls)),
+    path('register', register_user),
+    path('login', login_user),
+    path('api-auth', include('rest_framework.urls', namespace='rest_framework')),
 ]
+
