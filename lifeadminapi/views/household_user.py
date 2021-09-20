@@ -1,5 +1,7 @@
 """View module for handling requests about categories"""
 
+from lifeadminapi.models.household import Household
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
@@ -20,13 +22,13 @@ class HouseholdUserView(ViewSet):
         """
 
         # Uses the token passed in the `Authorization` header
-        household_user = HouseholdUser.objects.get(user=request.auth.user)
+        household_user = HouseholdUser()
 
         # Create a new Python instance of the Game class
         # and set its properties from what was sent in the
         # body of the request from the client.
-        household_user.user = request.data["user"]
-        household_user.household = request.data["household"]
+        household_user.user = User.objects.get(pk=request.data["user"])
+        household_user.household = Household.objects.get(pk= request.data["household"])
 
         # Try to save the new category to the database, then
         # serialize the category instance as JSON, and send the
@@ -62,8 +64,11 @@ class HouseholdUserView(ViewSet):
         """
         household_user = HouseholdUser.objects.get(user=request.auth.user)
 
-        household_user.user = request.data["user"]
-        household_user.household = request.data["household"]
+        user = User.objects.get(pk=pk)
+       
+
+        household_user.user = user
+        household_user.household = Household.objects.get(pk=request.data["household"])
 
         household_user.save()
 
@@ -110,4 +115,4 @@ class HouseholdUserSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = HouseholdUser
-        fields = ('user', 'household',)
+        fields = ('id', 'user', 'household',)

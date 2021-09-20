@@ -5,7 +5,7 @@ from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
-from lifeadminapi.models import Task
+from lifeadminapi.models import Task, Category
 
 
 class TaskView(ViewSet):
@@ -21,6 +21,8 @@ class TaskView(ViewSet):
 
         # Uses the token passed in the `Authorization` header
         household_user = HouseholdUser.objects.get(user=request.auth.user)
+        category = Category.objects.get(pk=request.data["category"])
+        user_assigned = HouseholdUser.objects.get(pk=request.data["assigned_to"])
 
         # Create a new Python instance of the Game class
         # and set its properties from what was sent in the
@@ -31,8 +33,8 @@ class TaskView(ViewSet):
         task.is_completed = request.data["is_completed"]
         task.created_on = request.data["created_on"]
         task.due_date = request.data["due_date"]
-        task.category = request.data["category"]
-        task.assigned_to = request.data["assigned_to"]
+        task.category = category
+        task.assigned_to = user_assigned
         task.created_by = household_user
 
         # Try to save the new task to the database, then
@@ -124,4 +126,4 @@ class TaskSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Task
-        fields = ('title', 'description', 'is_completed', 'created_on', 'due_date', 'category', 'assigned_to', 'created_by')
+        fields = ('id', 'title', 'description', 'is_completed', 'created_on', 'due_date', 'category', 'assigned_to', 'created_by')
