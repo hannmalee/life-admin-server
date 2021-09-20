@@ -115,4 +115,4 @@ class HouseholdUserSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = HouseholdUser
-        fields = ('user', 'household',)
+        fields = ('id', 'user', 'household',)
