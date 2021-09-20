@@ -28,7 +28,6 @@ class CategoryView(ViewSet):
         category = Category()
         category.title = request.data["title"]
         category.description = request.data["description"]
-        category.creator = request.data["creator"]
         category.creator = household_user
 
         # Try to save the new category to the database, then
@@ -65,10 +64,10 @@ class CategoryView(ViewSet):
         """
         household_user = HouseholdUser.objects.get(user=request.auth.user)
 
-        category = Category()
+        category = Category.objects.get(pk=pk)
         category.title = request.data["title"]
         category.description = request.data["description"]
-        category.creator = request.data["creator"]
+
         category.creator = household_user
 
         category.save()
