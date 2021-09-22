@@ -52,7 +52,7 @@ class TaskView(ViewSet):
             return Response({"reason": ex.message}, status=status.HTTP_400_BAD_REQUEST)
 
     def retrieve(self, request, pk=None):
-        """Handle GET requests for single categories
+        """Handle GET requests for single tasks
         Returns:
             Response -- JSON serialized task
         """
@@ -64,21 +64,23 @@ class TaskView(ViewSet):
             return HttpResponseServerError(ex)
 
     def update(self, request, pk=None):
-        """Handle PUT requests for a game
+        """Handle PUT requests for a task
 
         Returns:
             Response -- Empty body with 204 status code
         """
         household_user = HouseholdUser.objects.get(user=request.auth.user)
+        category = Category.objects.get(pk=request.data["category"])
+        user_assigned = HouseholdUser.objects.get(pk=request.data["assigned_to"])
 
-        task = Task()
+        task = Task.objects.get(pk=pk)
         task.title = request.data["title"]
         task.description = request.data["description"]
         task.is_completed = request.data["is_completed"]
         task.created_on = request.data["created_on"]
         task.due_date = request.data["due_date"]
-        task.category = request.data["category"]
-        task.assigned_to = request.data["assigned_to"]
+        task.category = category
+        task.assigned_to = user_assigned
         task.created_by = household_user
 
         task.save()
