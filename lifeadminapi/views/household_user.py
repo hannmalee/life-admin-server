@@ -49,8 +49,11 @@ class HouseholdUserView(ViewSet):
         Returns:
             Response -- JSON serialized category
         """
+        
         try:
             household_user = HouseholdUser.objects.get(pk=pk)
+            user = User.objects.get(pk=pk)
+            household_user.user = user
             serializer = HouseholdUserSerializer(household_user, context={'request': request})
             return Response(serializer.data)
         except Exception as ex:
