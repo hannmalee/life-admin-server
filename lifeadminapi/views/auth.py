@@ -1,3 +1,4 @@
+from lifeadminapi.models.household import Household
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
@@ -55,7 +56,8 @@ def register_user(request):
 
     # Now save the extra info in the levelupapi_gamer table
     household_user = HouseholdUser.objects.create(
-        household=request.data['household'],
+        household=Household.objects.create(
+            name=request.data['household_name'], description=request.data['description']),
         user=new_user
     )
 

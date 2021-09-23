@@ -110,12 +110,22 @@ class HouseholdUserView(ViewSet):
             household_users, many=True, context={'request': request})
         return Response(serializer.data)
 
+class UserSerializer(serializers.ModelSerializer):
+    """JSON serializer for users
+
+    Arguments:
+        serializers
+    """
+    class Meta:
+        model = User
+        fields = ('email', 'first_name', 'last_name')
 class HouseholdUserSerializer(serializers.ModelSerializer):
     """JSON serializer for categories
 
     Arguments:
         serializers
     """
+    user = UserSerializer()
     class Meta:
         model = HouseholdUser
         fields = ('id', 'user', 'household',)
