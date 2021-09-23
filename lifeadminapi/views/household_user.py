@@ -28,7 +28,7 @@ class HouseholdUserView(ViewSet):
         # and set its properties from what was sent in the
         # body of the request from the client.
         household_user.user = User.objects.get(pk=request.data["user"])
-        household_user.household = Household.objects.get(pk= request.data["household"])
+        household_user.household = Household.objects.get(pk=request.data["household"])
 
         # Try to save the new category to the database, then
         # serialize the category instance as JSON, and send the
@@ -60,20 +60,18 @@ class HouseholdUserView(ViewSet):
             return HttpResponseServerError(ex)
 
     def update(self, request, pk=None):
-        """Handle PUT requests for a game
+        """Handle PUT requests for a user
 
         Returns:
             Response -- Empty body with 204 status code
         """
         household_user = HouseholdUser.objects.get(user=request.auth.user)
 
-        user = User.objects.get(pk=pk)
-       
+        changedHouseholdUser = HouseholdUser.objects.get(pk=pk)
 
-        household_user.user = user
-        household_user.household = Household.objects.get(pk=request.data["household"])
+        changedHouseholdUser.household = household_user.household
 
-        household_user.save()
+        changedHouseholdUser.save()
 
         return Response({}, status=status.HTTP_204_NO_CONTENT)
 
