@@ -98,7 +98,8 @@ class CategoryView(ViewSet):
         Returns:
             Response -- JSON serialized list of categories
         """
-        categories = Category.objects.all()
+        household_user = HouseholdUser.objects.get(user=request.auth.user)
+        categories = Category.objects.filter(creator = household_user)
 
         # Note the additional `many=True` argument to the
         # serializer. It's needed when you are serializing
@@ -115,4 +116,5 @@ class CategorySerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Category
-        fields = ('id', 'title', 'description', 'creator')
+        fields = ('id', 'title', 'description', 'creator', 'task_set', )
+        depth = 1

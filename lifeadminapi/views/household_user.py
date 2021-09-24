@@ -28,7 +28,7 @@ class HouseholdUserView(ViewSet):
         # and set its properties from what was sent in the
         # body of the request from the client.
         household_user.user = User.objects.get(pk=request.data["user"])
-        household_user.household = Household.objects.get(pk= request.data["household"])
+        household_user.household = Household.objects.get(pk=request.data["household"])
 
         # Try to save the new category to the database, then
         # serialize the category instance as JSON, and send the
@@ -49,28 +49,29 @@ class HouseholdUserView(ViewSet):
         Returns:
             Response -- JSON serialized category
         """
+        
         try:
             household_user = HouseholdUser.objects.get(pk=pk)
+            user = User.objects.get(pk=pk)
+            household_user.user = user
             serializer = HouseholdUserSerializer(household_user, context={'request': request})
             return Response(serializer.data)
         except Exception as ex:
             return HttpResponseServerError(ex)
 
     def update(self, request, pk=None):
-        """Handle PUT requests for a game
+        """Handle PUT requests for a user
 
         Returns:
             Response -- Empty body with 204 status code
         """
         household_user = HouseholdUser.objects.get(user=request.auth.user)
 
-        user = User.objects.get(pk=pk)
-       
+        changedHouseholdUser = HouseholdUser.objects.get(pk=pk)
 
-        household_user.user = user
-        household_user.household = Household.objects.get(pk=request.data["household"])
+        changedHouseholdUser.household = household_user.household
 
-        household_user.save()
+        changedHouseholdUser.save()
 
         return Response({}, status=status.HTTP_204_NO_CONTENT)
 
@@ -107,12 +108,22 @@ class HouseholdUserView(ViewSet):
             household_users, many=True, context={'request': request})
         return Response(serializer.data)
 
+class UserSerializer(serializers.ModelSerializer):
+    """JSON serializer for users
+
+    Arguments:
+        serializers
+    """
+    class Meta:
+        model = User
+        fields = ('email', 'first_name', 'last_name')
 class HouseholdUserSerializer(serializers.ModelSerializer):
     """JSON serializer for categories
 
     Arguments:
         serializers
     """
+    user = UserSerializer()
     class Meta:
         model = HouseholdUser
         fields = ('id', 'user', 'household',)

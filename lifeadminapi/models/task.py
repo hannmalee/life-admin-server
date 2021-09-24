@@ -8,6 +8,6 @@ class Task(models.Model):
     is_completed = models.BooleanField(default=False)
     created_on = models.DateField(default="0000-00-00")
     due_date = models.DateField(default="0000-00-00")
-    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     assigned_to = models.ForeignKey(HouseholdUser, on_delete=models.DO_NOTHING, related_name="assigned_to")
     created_by = models.ForeignKey(HouseholdUser, on_delete=models.DO_NOTHING, related_name="created_by")

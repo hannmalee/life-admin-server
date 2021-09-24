@@ -21,8 +21,8 @@ class TaskView(ViewSet):
 
         # Uses the token passed in the `Authorization` header
         household_user = HouseholdUser.objects.get(user=request.auth.user)
-        category = Category.objects.get(pk=request.data["category"])
-        user_assigned = HouseholdUser.objects.get(pk=request.data["assigned_to"])
+        category = Category.objects.get(pk=request.data["category_id"])
+        # user_assigned = HouseholdUser.objects.get(pk=request.data["assigned_to"])
 
         # Create a new Python instance of the Game class
         # and set its properties from what was sent in the
@@ -34,7 +34,7 @@ class TaskView(ViewSet):
         task.created_on = request.data["created_on"]
         task.due_date = request.data["due_date"]
         task.category = category
-        task.assigned_to = user_assigned
+        task.assigned_to = household_user
         task.created_by = household_user
 
         # Try to save the new task to the database, then
